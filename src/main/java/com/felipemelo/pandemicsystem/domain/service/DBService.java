@@ -62,19 +62,23 @@ public class DBService {
 		
 		enderecoRepository.saveAll(Arrays.asList(e1, e2));
 		
-		Hospital h2 = new Hospital(null, "Santa Clara", "56464536415834");
-		Hospital h1 = new Hospital(null, "Unimed", "456432734156");
+		Ocupacao oc1 = new Ocupacao(null, 58.0, OffsetDateTime.now());
+		Ocupacao oc2 = new Ocupacao(null, 92.0, OffsetDateTime.now());
 		
+		Hospital h2 = new Hospital(null, "Santa Clara", "56464536415834", oc1);
+		Hospital h1 = new Hospital(null, "Unimed", "456432734156", oc2);
+		
+		h1.setOcupacao(oc2);
+		h2.setOcupacao(oc1);
+		h1.setEndereco(e2);
+		h2.setEndereco(e1);
+		
+		ocupacaoRepository.saveAll(Arrays.asList(oc1, oc2));
 		hospitalRepository.saveAll(Arrays.asList(h1, h2));
-		
-		Ocupacao oc1 = new Ocupacao(null, 58.0, OffsetDateTime.now(), h2);
-		Ocupacao oc2 = new Ocupacao(null, 92.0, OffsetDateTime.now(), h1);
-		Ocupacao oc3 = new Ocupacao(null, 75.0, OffsetDateTime.now(), h2);
-		
-		ocupacaoRepository.saveAll(Arrays.asList(oc1, oc2, oc3));
-		
-		h1.getHistoricoOcupacoes().addAll(Arrays.asList(oc2));
-		h2.getHistoricoOcupacoes().addAll(Arrays.asList(oc1, oc3));
+
+		oc1.setHospital(h2);
+		System.out.println(oc1.getHospital().getId());
+		oc2.setHospital(h1);
 		
 		Recurso rc1 = new Recurso(null, TipoRecurso.MEDICO, 3);
 		Recurso rc2 = new Recurso(null, TipoRecurso.ENFERMEIRO, 3);
@@ -87,12 +91,12 @@ public class DBService {
 		RecursoInventario ri3 = new RecursoInventario(h1, rc3, 1, 10);
 		RecursoInventario ri4 = new RecursoInventario(h1, rc2, 2, 6);
 		
-		recursoInventarioRepository.saveAll(Arrays.asList(ri1, ri2, ri3, ri4));
+		
 		
 		h1.getRecursos().addAll(Arrays.asList(ri3, ri4));
 		h2.getRecursos().addAll(Arrays.asList(ri1, ri2));
 		
-		
+		recursoInventarioRepository.saveAll(Arrays.asList(ri1, ri2, ri3, ri4));
 		
 		
 	}

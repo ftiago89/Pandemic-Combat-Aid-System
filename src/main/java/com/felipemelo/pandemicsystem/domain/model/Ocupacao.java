@@ -2,12 +2,14 @@ package com.felipemelo.pandemicsystem.domain.model;
 
 import java.time.OffsetDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Ocupacao {
@@ -18,18 +20,17 @@ public class Ocupacao {
 	private Double percentual;
 	private OffsetDateTime data;
 	
-	@ManyToOne
-	@JoinColumn(name = "hospital_id")
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL , mappedBy = "ocupacao")
 	private Hospital hospital;
 	
 	public Ocupacao() {}
 
-	public Ocupacao(Long id, Double percentual, OffsetDateTime data, Hospital hospital) {
+	public Ocupacao(Long id, Double percentual, OffsetDateTime data) {
 		super();
 		this.id = id;
 		this.percentual = percentual;
 		this.data = data;
-		this.hospital = hospital;
 	}
 
 	public Long getId() {

@@ -1,15 +1,15 @@
 package com.felipemelo.pandemicsystem.domain.model;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Hospital {
@@ -20,19 +20,24 @@ public class Hospital {
 	private String nome;
 	private String cnpj;
 	
-	@OneToMany(mappedBy = "hospital")
-	private List<Ocupacao> historicoOcupacoes = new ArrayList<>();
+	@OneToOne
+	@JoinColumn(name = "ocupacao_id")
+	private Ocupacao ocupacao;
 	
 	@OneToMany(mappedBy = "id.hospital")
 	private Set<RecursoInventario> recursos = new HashSet<>();
 	
+	@OneToOne
+	private Endereco endereco;
+	
 	public Hospital() {}
 
-	public Hospital(Long id, String nome, String cnpj) {
+	public Hospital(Long id, String nome, String cnpj, Ocupacao ocupacao) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.cnpj = cnpj;
+		this.ocupacao = ocupacao;
 	}
 
 	public Long getId() {
@@ -67,6 +72,14 @@ public class Hospital {
 		this.recursos = recursos;
 	}
 
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -75,12 +88,12 @@ public class Hospital {
 		return result;
 	}
 
-	public List<Ocupacao> getHistoricoOcupacoes() {
-		return historicoOcupacoes;
+	public Ocupacao getOcupacao() {
+		return ocupacao;
 	}
 
-	public void setHistoricoOcupacoes(List<Ocupacao> historicoOcupacoes) {
-		this.historicoOcupacoes = historicoOcupacoes;
+	public void setOcupacao(Ocupacao percentualOcupacao) {
+		this.ocupacao = percentualOcupacao;
 	}
 
 	@Override

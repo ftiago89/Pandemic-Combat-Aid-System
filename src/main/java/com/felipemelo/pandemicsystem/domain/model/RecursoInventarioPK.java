@@ -6,6 +6,9 @@ import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+/*Representa a chave primaria da tabela do item de inventario de um hospital, é referenciado por um hospital
+ * e por um recurso*/
+
 @Embeddable
 public class RecursoInventarioPK implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -24,6 +27,7 @@ public class RecursoInventarioPK implements Serializable{
 	public void setHospital(Hospital hospital) {
 		this.hospital = hospital;
 	}
+	
 	public Recurso getRecurso() {
 		return recurso;
 	}

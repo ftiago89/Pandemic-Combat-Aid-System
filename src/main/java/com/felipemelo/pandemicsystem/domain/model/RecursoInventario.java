@@ -3,9 +3,15 @@ package com.felipemelo.pandemicsystem.domain.model;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+/*Entidade da classe de associação entre Hospital e Recurso, representa itens do inventario do hospital, pois
+ * um hospital pode ter quantidades diferentes de cada tipo de recurso*/
+
 @Entity
 public class RecursoInventario {
 	
+	@JsonIgnore
 	@EmbeddedId
 	private RecursoInventarioPK id = new RecursoInventarioPK();
 	private Integer quantidade;
@@ -21,6 +27,7 @@ public class RecursoInventario {
 		this.pontos = pontos;
 	}
 
+	@JsonIgnore
 	public Hospital getHospital() {
 		return id.getHospital();
 	}
