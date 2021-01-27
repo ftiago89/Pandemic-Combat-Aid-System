@@ -1,7 +1,17 @@
 package com.felipemelo.pandemicsystem.domain.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Endereco {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String logradouro;
 	private Integer numero;
@@ -11,10 +21,14 @@ public class Endereco {
 	private Double latitude;
 	private Double longitude;
 	
+	@ManyToOne
+	@JoinColumn(name = "cidade_id")
+	private Cidade cidade;
+	
 	public Endereco() {}
 	
 	public Endereco(Long id, String logradouro, Integer numero, String complemento, String bairro, String cep,
-			Double latitude, Double longitude) {
+			Cidade cidade, Double latitude, Double longitude) {
 		super();
 		this.id = id;
 		this.logradouro = logradouro;
@@ -22,6 +36,7 @@ public class Endereco {
 		this.complemento = complemento;
 		this.bairro = bairro;
 		this.cep = cep;
+		this.cidade = cidade;
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}

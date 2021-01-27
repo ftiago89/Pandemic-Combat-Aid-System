@@ -1,31 +1,38 @@
 package com.felipemelo.pandemicsystem.domain.model;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Cidade {
+public class Hospital {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
+	private String cnpj;
 	
-	@ManyToOne
-	@JoinColumn(name = "estado_id")
-	private Estado estado;
+	@OneToMany(mappedBy = "hospital")
+	private List<Ocupacao> historicoOcupacoes = new ArrayList<>();
 	
-	public Cidade() {}
+	@OneToMany(mappedBy = "id.hospital")
+	private Set<RecursoInventario> recursos = new HashSet<>();
 	
-	public Cidade(Long id, String nome, Estado estado) {
+	public Hospital() {}
+
+	public Hospital(Long id, String nome, String cnpj) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.estado = estado;
+		this.cnpj = cnpj;
 	}
 
 	public Long getId() {
@@ -44,12 +51,20 @@ public class Cidade {
 		this.nome = nome;
 	}
 
-	public Estado getEstado() {
-		return estado;
+	public String getCnpj() {
+		return cnpj;
 	}
 
-	public void setEstado(Estado estado) {
-		this.estado = estado;
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+
+	public Set<RecursoInventario> getRecursos() {
+		return recursos;
+	}
+
+	public void setRecursos(Set<RecursoInventario> recursos) {
+		this.recursos = recursos;
 	}
 
 	@Override
@@ -60,6 +75,14 @@ public class Cidade {
 		return result;
 	}
 
+	public List<Ocupacao> getHistoricoOcupacoes() {
+		return historicoOcupacoes;
+	}
+
+	public void setHistoricoOcupacoes(List<Ocupacao> historicoOcupacoes) {
+		this.historicoOcupacoes = historicoOcupacoes;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -68,7 +91,7 @@ public class Cidade {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cidade other = (Cidade) obj;
+		Hospital other = (Hospital) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

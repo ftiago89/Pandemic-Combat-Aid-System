@@ -1,31 +1,35 @@
 package com.felipemelo.pandemicsystem.domain.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.felipemelo.pandemicsystem.domain.model.enums.TipoRecurso;
 
 @Entity
-public class Cidade {
+public class Recurso {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String nome;
+	private Integer tipo;
+	private Integer pontos;
 	
-	@ManyToOne
-	@JoinColumn(name = "estado_id")
-	private Estado estado;
+	@OneToMany(mappedBy = "id.recurso")
+	private Set<RecursoInventario> recursos = new HashSet<>();
 	
-	public Cidade() {}
-	
-	public Cidade(Long id, String nome, Estado estado) {
+	public Recurso() {}
+
+	public Recurso(Long id, TipoRecurso tipo, Integer pontos) {
 		super();
 		this.id = id;
-		this.nome = nome;
-		this.estado = estado;
+		this.tipo = tipo.getCod();
+		this.pontos = pontos;
 	}
 
 	public Long getId() {
@@ -36,20 +40,20 @@ public class Cidade {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public TipoRecurso getTipo() {
+		return TipoRecurso.toEnum(tipo);
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setTipo(TipoRecurso tipo) {
+		this.tipo = tipo.getCod();
 	}
 
-	public Estado getEstado() {
-		return estado;
+	public Integer getPontos() {
+		return pontos;
 	}
 
-	public void setEstado(Estado estado) {
-		this.estado = estado;
+	public void setPontos(Integer pontos) {
+		this.pontos = pontos;
 	}
 
 	@Override
@@ -68,7 +72,7 @@ public class Cidade {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cidade other = (Cidade) obj;
+		Recurso other = (Recurso) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -76,5 +80,5 @@ public class Cidade {
 			return false;
 		return true;
 	}
-
+	
 }

@@ -1,5 +1,7 @@
 package com.felipemelo.pandemicsystem.domain.model;
 
+import java.time.OffsetDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,24 +10,26 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Cidade {
+public class Ocupacao {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String nome;
+	private Double percentual;
+	private OffsetDateTime data;
 	
 	@ManyToOne
-	@JoinColumn(name = "estado_id")
-	private Estado estado;
+	@JoinColumn(name = "hospital_id")
+	private Hospital hospital;
 	
-	public Cidade() {}
-	
-	public Cidade(Long id, String nome, Estado estado) {
+	public Ocupacao() {}
+
+	public Ocupacao(Long id, Double percentual, OffsetDateTime data, Hospital hospital) {
 		super();
 		this.id = id;
-		this.nome = nome;
-		this.estado = estado;
+		this.percentual = percentual;
+		this.data = data;
+		this.hospital = hospital;
 	}
 
 	public Long getId() {
@@ -36,20 +40,28 @@ public class Cidade {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public Double getPercentual() {
+		return percentual;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setPercentual(Double percentual) {
+		this.percentual = percentual;
 	}
 
-	public Estado getEstado() {
-		return estado;
+	public OffsetDateTime getData() {
+		return data;
 	}
 
-	public void setEstado(Estado estado) {
-		this.estado = estado;
+	public void setData(OffsetDateTime data) {
+		this.data = data;
+	}
+
+	public Hospital getHospital() {
+		return hospital;
+	}
+
+	public void setHospital(Hospital hospital) {
+		this.hospital = hospital;
 	}
 
 	@Override
@@ -68,7 +80,7 @@ public class Cidade {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cidade other = (Cidade) obj;
+		Ocupacao other = (Ocupacao) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
