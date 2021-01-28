@@ -25,11 +25,11 @@ public class Recurso {
 	
 	public Recurso() {}
 
-	public Recurso(Long id, TipoRecurso tipo, Integer pontos) {
+	public Recurso(Long id, TipoRecurso tipo) {
 		super();
 		this.id = id;
 		this.tipo = tipo.getCod();
-		this.pontos = pontos;
+		calculaPontos();
 	}
 
 	public Long getId() {
@@ -79,6 +79,29 @@ public class Recurso {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	public void calculaPontos() {
+		int pontos = 0;
+		
+		switch (getTipo()) {
+		case MEDICO:
+			pontos =  3;
+			break;
+		case ENFERMEIRO:
+			pontos =  3;
+			break;
+		case RESPIRADOR:
+			pontos =  5;
+			break;
+		case TOMOGRAFO:
+			pontos =  12;
+			break;
+		case AMBULANCIA:
+			pontos =  10;
+			break;
+		}
+		this.pontos = pontos;
 	}
 	
 }

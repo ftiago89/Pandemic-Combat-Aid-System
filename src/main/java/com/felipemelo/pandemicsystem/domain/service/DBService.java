@@ -80,18 +80,16 @@ public class DBService {
 		System.out.println(oc1.getHospital().getId());
 		oc2.setHospital(h1);
 		
-		Recurso rc1 = new Recurso(null, TipoRecurso.MEDICO, 3);
-		Recurso rc2 = new Recurso(null, TipoRecurso.ENFERMEIRO, 3);
-		Recurso rc3 = new Recurso(null, TipoRecurso.AMBULANCIA, 10);
+		Recurso rc1 = new Recurso(null, TipoRecurso.MEDICO);
+		Recurso rc2 = new Recurso(null, TipoRecurso.ENFERMEIRO);
+		Recurso rc3 = new Recurso(null, TipoRecurso.AMBULANCIA);
 		
 		recursoRepository.saveAll(Arrays.asList(rc1, rc2, rc3));
 		
-		RecursoInventario ri1 = new RecursoInventario(h2, rc1, 2, 6);
-		RecursoInventario ri2 = new RecursoInventario(h2, rc2, 1, 3);
-		RecursoInventario ri3 = new RecursoInventario(h1, rc3, 1, 10);
-		RecursoInventario ri4 = new RecursoInventario(h1, rc2, 2, 6);
-		
-		
+		RecursoInventario ri1 = new RecursoInventario(h2, rc1, 3);
+		RecursoInventario ri2 = new RecursoInventario(h2, rc2, 1);
+		RecursoInventario ri3 = new RecursoInventario(h1, rc3, 2);
+		RecursoInventario ri4 = new RecursoInventario(h1, rc2, 2);
 		
 		h1.getRecursos().addAll(Arrays.asList(ri3, ri4));
 		h2.getRecursos().addAll(Arrays.asList(ri1, ri2));

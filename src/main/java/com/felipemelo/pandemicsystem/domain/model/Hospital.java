@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.felipemelo.pandemicsystem.domain.model.enums.TipoRecurso;
+import com.felipemelo.pandemicsystem.domain.model.exception.NegociacaoInvalidaException;
+
 @Entity
 public class Hospital {
 	
@@ -111,6 +114,32 @@ public class Hospital {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	public void retiraRecurso(TipoRecurso tipo, Integer quantidade) {
+		for (RecursoInventario ri: this.recursos) {
+			//System.out.println(ri.getRecurso().getTipo());
+			if (ri.getRecurso().getTipo().equals(tipo) && (ri.getQuantidade() >= quantidade)) {
+				ri.setQuantidade(ri.getQuantidade() - quantidade);
+				ri.calculaPontos();
+				return;
+			}
+		}
+		throw new NegociacaoInvalidaException("Hospital de id: " + this.id + " não tem o recurso: " 
+				+ tipo + " disponível!");
+	}
+	
+	public boolean adicionaRecurso(TipoRecurso tipo, Integer quantidade) {
+		boolean achou = false;
+		for (RecursoInventario ri: this.recursos) {
+			if (ri.getRecurso().getTipo().equals(tipo)) {
+				ri.setQuantidade(ri.getQuantidade() + quantidade);
+				ri.calculaPontos();
+				achou = true;
+				break;
+			}	
+		}
+		return achou;
 	}
 
 }

@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.felipemelo.pandemicsystem.domain.model.Hospital;
+import com.felipemelo.pandemicsystem.domain.model.Negociacao;
 import com.felipemelo.pandemicsystem.domain.model.Ocupacao;
 import com.felipemelo.pandemicsystem.domain.model.RecursoInventario;
 import com.felipemelo.pandemicsystem.domain.repository.HospitalRepository;
+import com.felipemelo.pandemicsystem.domain.repository.NegociacaoRepository;
 import com.felipemelo.pandemicsystem.domain.repository.OcupacaoRepository;
 import com.felipemelo.pandemicsystem.domain.repository.RecursoInventarioRepository;
 
@@ -25,6 +27,9 @@ public class RelatoriosService {
 	
 	@Autowired
 	private HospitalRepository hospitalRepository;
+	
+	@Autowired
+	private NegociacaoRepository negociacaoRepository;
 
 	public String hospitaisMaiorQue90() {
 		List<Ocupacao> ocupacoes = ocupacaoRepository.findAll();
@@ -64,14 +69,19 @@ public class RelatoriosService {
 			switch (ri.getRecurso().getTipo()) {
 			case MEDICO:
 				++totalMedicos;
+				break;
 			case ENFERMEIRO:
 				++totalEnfermeiros;
+				break;
 			case RESPIRADOR:
 				++totalRespiradores;
+				break;
 			case TOMOGRAFO:
 				++totalTomografos;
+				break;
 			case AMBULANCIA:
 				++totalAmbulancias;
+				break;
 			}
 		}
 		resultados.add("Atualmente, existem " + ((double)totalMedicos/hospitais.size()) + " Médicos por hospital.");
@@ -117,5 +127,15 @@ public class RelatoriosService {
 				". Sua porcentagem de ocupação atual é de: " + maisAntiga.getPercentual() + "%";
 	}
 	
-	//fazer relatorio de historico de negociacoes
+	public List<String> historicoNegociacoes() {
+		List<Negociacao> negociacoes = negociacaoRepository.findAll();
+		List<String> historico = new ArrayList<>();
+		
+		for (Negociacao ng: negociacoes) {
+			String aux = "Negociacao ID: " + ng.getId() + " Realizada na data: " + ng.getData() + "\n" +
+					ng.getInfoItensHospital1() + ng.getInfoItensHospital2();
+			historico.add(aux);
+		}
+		return historico;
+	}
 }

@@ -5,5 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.felipemelo.pandemicsystem.domain.model.Recurso;
 
 public interface RecursoRepository extends JpaRepository<Recurso, Long>{
+	
+	public Recurso findByTipo(Integer tipo);
 
 }

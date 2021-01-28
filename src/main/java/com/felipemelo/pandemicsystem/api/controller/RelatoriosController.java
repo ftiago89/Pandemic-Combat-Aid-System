@@ -50,5 +50,12 @@ public class RelatoriosController {
 		relatorioDto.getMensagens().add(relatoriosService.hospitalMenosCritico());
 		return ResponseEntity.ok().body(relatorioDto);
 	}
+	
+	@GetMapping("/historico-negociacoes")
+	public ResponseEntity<RelatorioDto> historicoNegociacoes(){
+		RelatorioDto relatorioDto = new RelatorioDto();
+		relatorioDto.setMensagens(relatoriosService.historicoNegociacoes());;
+		return ResponseEntity.ok().body(relatorioDto);
+	}
 
 }

@@ -19,12 +19,12 @@ public class RecursoInventario {
 	
 	public RecursoInventario() {}
 
-	public RecursoInventario(Hospital hospital, Recurso recurso, Integer quantidade, Integer pontos) {
+	public RecursoInventario(Hospital hospital, Recurso recurso, Integer quantidade) {
 		super();
 		this.id.setHospital(hospital);
 		this.id.setRecurso(recurso);
 		this.quantidade = quantidade;
-		this.pontos = pontos;
+		calculaPontos();
 	}
 
 	@JsonIgnore
@@ -85,6 +85,27 @@ public class RecursoInventario {
 		return true;
 	}
 	
-	
+	public void calculaPontos() {
+		int pontos = 0;
+		
+		switch (this.getRecurso().getTipo()) {
+		case MEDICO:
+			pontos =  3 * this.quantidade;
+			break;
+		case ENFERMEIRO:
+			pontos =  3 * this.quantidade;
+			break;
+		case RESPIRADOR:
+			pontos =  5 * this.quantidade;
+			break;
+		case TOMOGRAFO:
+			pontos =  12 * this.quantidade;
+			break;
+		case AMBULANCIA:
+			pontos =  10 * this.quantidade;
+			break;
+		}
+		this.pontos = pontos;
+	}
 
 }
