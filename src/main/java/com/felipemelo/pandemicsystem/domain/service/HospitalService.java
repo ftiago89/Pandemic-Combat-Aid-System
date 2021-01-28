@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.felipemelo.pandemicsystem.api.model.HospitalDto;
+import com.felipemelo.pandemicsystem.api.model.OcupacaoInput;
 import com.felipemelo.pandemicsystem.domain.model.Cidade;
 import com.felipemelo.pandemicsystem.domain.model.Endereco;
 import com.felipemelo.pandemicsystem.domain.model.Hospital;
@@ -45,10 +46,10 @@ public class HospitalService {
 		return hospitalRepository.findAll();
 	}
 	
-	public Hospital find(Long id) {
-		Optional<Hospital> obj = hospitalRepository.findById(id);
+	public Hospital find(Long idHospital) {
+		Optional<Hospital> obj = hospitalRepository.findById(idHospital);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", tipo: " + Hospital.class));
+				"Objeto não encontrado! Id: " + idHospital));
 	}
 
 	/*é necessário adicionar um hospital junto com seus itens de inventario e a sua ocupação atual*/
@@ -65,6 +66,26 @@ public class HospitalService {
 		hospitalRepository.save(hospital);
 		return hospital;
 	}
+	
+	public Hospital updateOcupacao(Long idHospital, OcupacaoInput novaOcupacao) {
+		Hospital hospital = find(idHospital);
+		Ocupacao ocupacao = new Ocupacao(null, novaOcupacao.getPercentualAtualizado(), OffsetDateTime.now());
+		hospital.setOcupacao(ocupacao);
+		ocupacao.setHospital(hospital);
+		
+		ocupacaoRepository.save(ocupacao);
+		
+		return hospitalRepository.save(hospital);
+	}
+	
+	public boolean existsById(Long idHospital) {
+		if (hospitalRepository.existsById(idHospital)) {
+			return true;
+		}
+		return false;
+	}
+	
+	//TRANSFERENCIA DE MODEL PARA REPRESENTATION MODEL E VICE VERSA
 	
 	public HospitalDto toDto(Hospital hospital) {
 		HospitalDto hospitalDto = new HospitalDto(hospital.getId(), hospital.getNome(), hospital.getCnpj(),
