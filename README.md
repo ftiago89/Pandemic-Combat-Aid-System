@@ -63,3 +63,22 @@ Você irá desenvolver uma **API RESTFul** (a ideia é que facilmente outros sis
 5. Sua API deve estar minimamente coberta por testes (Unitários e/ou integração).
 6. Da descrição acima você pode escrever uma solução básica ou adicionar requisitos não descritos. Use seu tempo com sabedoria; Uma solução ótima e definitiva pode levar muito tempo para ser efetiva, então você deve trazer a melhor solução possível, que leve o mínimo de tempo, mas que ainda seja capaz de demonstrar suas habilidades.
 7. Comente qualquer dúvida e cada decisão tomada.
+
+# Tasks 
+
+- [x] Adicionar hospitais
+- [x] Atualizar ocupação de hospitais
+- [x] Hospitais não podem adicionar/remover recursos
+- [x] Negociação de itens
+- [x] Relatório porcentagem de hospitais com ocupação maior que 90%
+- [x] Relatório porcentagem de hospitais com ocupação menor que 90%
+- [x] Relatório quantidade média de recurso por hospital
+- [x] Relatório hospital em situação mais crítica (mais tempo com ocupação maior que 90%)
+- [x] Relatório hospital em situação menos crítica (mais tempo com a menor ocupação)
+- [x] Relatório histórico de negociações
+- [ ] Validar o input de informações como cnpj, cep, etc.
+- [ ] Criar profile de desenvolvimento com BD Mysql
+- [ ] Realizar testes com mais informações utilizando o postman
+- [ ] Verificar a necessidade de adicionar mais comentários no código
+- [ ] Adicionar Testes (Unitários e/ou integração)
+- [ ] Documentação Swagger
