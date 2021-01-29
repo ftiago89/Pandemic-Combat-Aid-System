@@ -131,18 +131,21 @@ public class Hospital {
 	
 	public void retiraRecurso(TipoRecurso tipo, Integer quantidade) {
 		for (RecursoInventario ri: this.recursos) {
+			//se tiver o tipo de recurso na lista e tiver quantidade suficiete, os recursos são retirados
 			if (ri.getRecurso().getTipo().equals(tipo) && (ri.getQuantidade() >= quantidade)) {
 				ri.setQuantidade(ri.getQuantidade() - quantidade);
 				ri.calculaPontos();
 				return;
 			}
 		}
+		//quando não tem então uma exceção é lançada
 		throw new NegociacaoInvalidaException("Hospital de id: " + this.id + " não tem o recurso: " 
 				+ tipo + " disponível!");
 	}
 	
 	public boolean adicionaRecurso(TipoRecurso tipo, Integer quantidade) {
 		boolean achou = false;
+		//caso ache já um recurso do mesmo tipo na lista então é adicionado
 		for (RecursoInventario ri: this.recursos) {
 			if (ri.getRecurso().getTipo().equals(tipo)) {
 				ri.setQuantidade(ri.getQuantidade() + quantidade);

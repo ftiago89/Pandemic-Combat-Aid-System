@@ -1,24 +1,18 @@
 package com.felipemelo.pandemicsystem.api.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-/*Fiz esta classe para representar a saida de um hospital pois nela indica se o hospital está cheio
- * ou não com o atributo "cheio", diferente da classe InputHospitalDto onde não é preciso informar esse
- * dado na requisição de cadastro de um hospital.*/
-
-public class OutputHospitalDto {
+public class UpdateHospitalDto {
 	
-	private Long id;
+private Long id;
 	
+	@NotEmpty(message = "Preenchimento de nome obrigatório!")
+	@NotNull(message = "Preenchimento de nome obrigatório!")
+	@Size(min = 2, max = 120, message = "O nome precisa ter entre 2 e 120 letras!")
 	private String nome;
 	private String cnpj;
-	
-	private Boolean cheio;
-	
-	private Double percentualOcupacao;
-	
-	private List<RecursoInventarioDto> recursos = new ArrayList<>();
 	
 	private String logradouro;
 	private Integer numero;
@@ -31,19 +25,15 @@ public class OutputHospitalDto {
 	private String Cidade;
 	private String Estado;
 	
-	public OutputHospitalDto() {}
-	
-	
+	public UpdateHospitalDto() {}
 
-	public OutputHospitalDto(Long id, String nome, String cnpj, Double percentualOcupacao, List<RecursoInventarioDto> recursos,
-			String logradouro, Integer numero, String complemento, String bairro, String cep, Double latitude,
-			Double longitude, String cidade, String estado, Boolean cheio) {
+	public UpdateHospitalDto(Long id,
+			String nome, String cnpj, String logradouro, Integer numero, String complemento, String bairro, String cep,
+			Double latitude, Double longitude, String cidade, String estado) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.cnpj = cnpj;
-		this.percentualOcupacao = percentualOcupacao;
-		this.recursos = recursos;
 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.complemento = complemento;
@@ -51,12 +41,9 @@ public class OutputHospitalDto {
 		this.cep = cep;
 		this.latitude = latitude;
 		this.longitude = longitude;
-		this.Cidade = cidade;
-		this.Estado = estado;
-		this.cheio = cheio;
+		Cidade = cidade;
+		Estado = estado;
 	}
-
-
 
 	public Long getId() {
 		return id;
@@ -80,22 +67,6 @@ public class OutputHospitalDto {
 
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
-	}
-
-	public Double getPercentualOcupacao() {
-		return percentualOcupacao;
-	}
-
-	public void setPercentualOcupacao(Double percentualOcupacao) {
-		this.percentualOcupacao = percentualOcupacao;
-	}
-
-	public List<RecursoInventarioDto> getRecursos() {
-		return recursos;
-	}
-
-	public void setRecursos(List<RecursoInventarioDto> recursos) {
-		this.recursos = recursos;
 	}
 
 	public String getLogradouro() {
@@ -159,7 +130,7 @@ public class OutputHospitalDto {
 	}
 
 	public void setCidade(String cidade) {
-		this.Cidade = cidade;
+		Cidade = cidade;
 	}
 
 	public String getEstado() {
@@ -168,14 +139,6 @@ public class OutputHospitalDto {
 
 	public void setEstado(String estado) {
 		Estado = estado;
-	}
-
-	public Boolean getCheio() {
-		return cheio;
-	}
-
-	public void setCheio(Boolean cheio) {
-		this.cheio = cheio;
 	}
 
 }

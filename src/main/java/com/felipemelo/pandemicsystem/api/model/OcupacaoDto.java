@@ -4,12 +4,12 @@ import javax.validation.constraints.NotNull;
 
 /*Representation model de entrada para a atualização de uma ocupação*/
 
-public class OcupacaoInput {
+public class OcupacaoDto {
 	
 	@NotNull(message = "Preenchimento de percentual obrigatório!")
 	private Double percentualAtualizado;
 	
-	public OcupacaoInput() {}
+	public OcupacaoDto() {}
 
 
 	public Double getPercentualAtualizado() {

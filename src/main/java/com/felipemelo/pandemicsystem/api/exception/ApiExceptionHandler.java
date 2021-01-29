@@ -12,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.felipemelo.pandemicsystem.domain.model.exception.DataIntegrityException;
 import com.felipemelo.pandemicsystem.domain.model.exception.NegociacaoInvalidaException;
 import com.felipemelo.pandemicsystem.domain.model.exception.ObjectNotFoundException;
 
@@ -50,12 +51,11 @@ public class ApiExceptionHandler {
 		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
-	/*
-	@ExceptionHandler(IllegalArgumentException.class)
-	public ResponseEntity<StandardError> illegalArgument(IllegalArgumentException e, HttpServletRequest request){
+	
+	@ExceptionHandler(DataIntegrityException.class)
+	public ResponseEntity<StandardError> dataIntegrity(DataIntegrityException e, HttpServletRequest request){
 		
-		StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), "Argumento inválido!", OffsetDateTime.now());
+		StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), OffsetDateTime.now());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
-	*/
 }

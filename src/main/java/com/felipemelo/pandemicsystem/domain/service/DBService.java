@@ -50,7 +50,7 @@ public class DBService {
 	
 	public void instantiateTestDB() {
 		
-		Estado est1 = new Estado(null, "Paraíba");
+		Estado est1 = new Estado(null, "PB");
 		Cidade c1 = new Cidade(null, "João pessoa", est1);
 		Cidade c2 = new Cidade(null, "Guarabira", est1);
 		
