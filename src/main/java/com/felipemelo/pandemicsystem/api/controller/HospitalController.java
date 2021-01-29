@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.felipemelo.pandemicsystem.api.model.HospitalDto;
 import com.felipemelo.pandemicsystem.api.model.OcupacaoInput;
-import com.felipemelo.pandemicsystem.domain.model.Hospital;
 import com.felipemelo.pandemicsystem.domain.service.HospitalService;
 
 @RestController
@@ -28,23 +27,18 @@ public class HospitalController {
 	
 	@GetMapping
 	public List<HospitalDto> findAll(){
-		return hospitalService.toDtoCollection(hospitalService.findAll());
+		return hospitalService.findAll();
 	}
 	
 	@GetMapping("/{idHospital}")
 	public ResponseEntity<HospitalDto> find(@PathVariable Long idHospital) {
-		Hospital hospital = hospitalService.find(idHospital);
-		HospitalDto hospitalDto = hospitalService.toDto(hospital);
-		return ResponseEntity.ok().body(hospitalDto);
+		return ResponseEntity.ok().body(hospitalService.find(idHospital));
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public HospitalDto insertHospital(@RequestBody HospitalDto hospitalDto) {
-		
-		Hospital hospital = hospitalService.fromDto(hospitalDto);
-	
-		return hospitalService.toDto((hospitalService.insertHospital(hospital)));
+		return (hospitalService.insertHospital(hospitalDto));
 	}
 	
 	@PutMapping("/{idHospital}/ocupacao")
@@ -54,8 +48,7 @@ public class HospitalController {
 			return ResponseEntity.notFound().build();
 		}
 		
-		HospitalDto hospitalDto = hospitalService.toDto(hospitalService.updateOcupacao(idHospital, novaOcupacao));
-		return ResponseEntity.ok(hospitalDto);
+		return ResponseEntity.ok(hospitalService.updateOcupacao(idHospital, novaOcupacao));
 	}
 	
 }

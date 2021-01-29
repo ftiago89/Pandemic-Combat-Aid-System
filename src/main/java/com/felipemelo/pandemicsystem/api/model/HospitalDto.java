@@ -1,19 +1,24 @@
 package com.felipemelo.pandemicsystem.api.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.felipemelo.pandemicsystem.domain.model.RecursoInventario;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 public class HospitalDto {
 	
 	private Long id;
+	
+	@NotBlank
+	@Size(min = 2, max = 120)
 	private String nome;
 	private String cnpj;
 	
+	@NotBlank
 	private Double percentualOcupacao;
 	
-	private Set<RecursoInventario> recursos = new HashSet<>();
+	private List<RecursoInventarioDto> recursos = new ArrayList<>();
 	
 	private String logradouro;
 	private Integer numero;
@@ -29,7 +34,7 @@ public class HospitalDto {
 	
 	
 
-	public HospitalDto(Long id, String nome, String cnpj, Double percentualOcupacao, Set<RecursoInventario> recursos,
+	public HospitalDto(Long id, String nome, String cnpj, Double percentualOcupacao, List<RecursoInventarioDto> recursos,
 			String logradouro, Integer numero, String complemento, String bairro, String cep, Double latitude,
 			Double longitude, Long cidadeId) {
 		super();
@@ -82,11 +87,11 @@ public class HospitalDto {
 		this.percentualOcupacao = percentualOcupacao;
 	}
 
-	public Set<RecursoInventario> getRecursos() {
+	public List<RecursoInventarioDto> getRecursos() {
 		return recursos;
 	}
 
-	public void setRecursos(Set<RecursoInventario> recursos) {
+	public void setRecursos(List<RecursoInventarioDto> recursos) {
 		this.recursos = recursos;
 	}
 

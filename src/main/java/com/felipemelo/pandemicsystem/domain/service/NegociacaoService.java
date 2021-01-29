@@ -90,15 +90,16 @@ public class NegociacaoService {
 			}
 		}
 		
-		String info1 = "Hospital ID: " + hospital1.getId() + " Ofereceu:\n";
-		String info2 = "Hospital ID: " + hospital2.getId() + " Ofereceu:\n";
+		String info1 = "Hospital ID: " + hospital1.getId() + " Ofereceu: ";
+		String info2 = "Hospital ID: " + hospital2.getId() + " Ofereceu: ";
 		
 		for (RecursoNegociacaoDto rnd: input.getRecursosHospital1()) {
-			info1.concat(rnd.getTipo() + " x" + rnd.getQuantidade() + "\n");
+			info1 += (rnd.getTipo() + " x" + rnd.getQuantidade() + ". ");
+			System.out.println("passou");
 		}
 		
 		for (RecursoNegociacaoDto rnd: input.getRecursosHospital2()) {
-			info2.concat(rnd.getTipo() + " x" + rnd.getQuantidade() + "\n");
+			info2 += (rnd.getTipo() + " x" + rnd.getQuantidade() + ". ");
 		}
 		
 		Negociacao negociacao = new Negociacao(null, hospital1.getId(), hospital2.getId(), OffsetDateTime.now(), info1, info2);

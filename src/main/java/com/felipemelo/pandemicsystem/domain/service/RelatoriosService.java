@@ -132,7 +132,7 @@ public class RelatoriosService {
 		List<String> historico = new ArrayList<>();
 		
 		for (Negociacao ng: negociacoes) {
-			String aux = "Negociacao ID: " + ng.getId() + " Realizada na data: " + ng.getData() + "\n" +
+			String aux = "Negociacao ID: " + ng.getId() + " Realizada na data: " + ng.getData() + " " +
 					ng.getInfoItensHospital1() + ng.getInfoItensHospital2();
 			historico.add(aux);
 		}

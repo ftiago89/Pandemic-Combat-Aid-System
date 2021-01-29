@@ -1,7 +1,10 @@
 package com.felipemelo.pandemicsystem.api.model;
 
+import javax.validation.constraints.NotBlank;
+
 public class OcupacaoInput {
 	
+	@NotBlank
 	private Double percentualAtualizado;
 	
 	public OcupacaoInput() {}
