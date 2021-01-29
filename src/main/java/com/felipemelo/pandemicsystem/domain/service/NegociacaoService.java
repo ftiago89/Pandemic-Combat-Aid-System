@@ -59,7 +59,7 @@ public class NegociacaoService {
 		if ((input.calculaPontos1() != input.calculaPontos2()) && (!((hospital1.getOcupacao().getPercentual() > 90.0))
 				|| ((hospital2.getOcupacao().getPercentual() > 90.0)))) {
 			throw new NegociacaoInvalidaException("Negociação inválida! Os hospitais precisam oferecer a mesma"
-					+ "quantidade de pontos.");
+					+ " quantidade de pontos.");
 		}
 		
 		for (RecursoNegociacaoDto rnd: input.getRecursosHospital1()) {
@@ -81,10 +81,9 @@ public class NegociacaoService {
 		}
 		
 		for (RecursoNegociacaoDto rnd: input.getRecursosHospital1()) {
-			hospital2.adicionaRecurso(rnd.getTipo(), rnd.getQuantidade());
 			if (!hospital2.adicionaRecurso(rnd.getTipo(), rnd.getQuantidade())) {
 				Recurso recurso = recursoRepository.findByTipo(rnd.getTipo().getCod());
-				RecursoInventario recursoInventario = new RecursoInventario(hospital1, recurso, rnd.getQuantidade());
+				RecursoInventario recursoInventario = new RecursoInventario(hospital2, recurso, rnd.getQuantidade());
 				recursoInventarioRepository.save(recursoInventario);
 				hospital2.getRecursos().add(recursoInventario);
 			}

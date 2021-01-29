@@ -1,5 +1,7 @@
 package com.felipemelo.pandemicsystem.api.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +23,7 @@ public class NegociacaoController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public OutputNegociacaoDto negociacao(@RequestBody InputNegociacaoDto input){
+	public OutputNegociacaoDto negociacao(@Valid @RequestBody InputNegociacaoDto input){
 		negociacaoService.validaNegociacao(input);
 		OutputNegociacaoDto output = new OutputNegociacaoDto(input);
 		return output;

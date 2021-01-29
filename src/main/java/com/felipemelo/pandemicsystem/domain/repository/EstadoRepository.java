@@ -5,5 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.felipemelo.pandemicsystem.domain.model.Estado;
 
 public interface EstadoRepository extends JpaRepository<Estado, Long>{
+	
+	public Estado findByNome(String Nome);
 
 }

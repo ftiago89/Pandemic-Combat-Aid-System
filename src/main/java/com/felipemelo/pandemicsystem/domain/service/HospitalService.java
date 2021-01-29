@@ -2,10 +2,9 @@ package com.felipemelo.pandemicsystem.domain.service;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,13 +14,16 @@ import com.felipemelo.pandemicsystem.api.model.OcupacaoInput;
 import com.felipemelo.pandemicsystem.api.model.RecursoInventarioDto;
 import com.felipemelo.pandemicsystem.domain.model.Cidade;
 import com.felipemelo.pandemicsystem.domain.model.Endereco;
+import com.felipemelo.pandemicsystem.domain.model.Estado;
 import com.felipemelo.pandemicsystem.domain.model.Hospital;
 import com.felipemelo.pandemicsystem.domain.model.Ocupacao;
 import com.felipemelo.pandemicsystem.domain.model.Recurso;
 import com.felipemelo.pandemicsystem.domain.model.RecursoInventario;
 import com.felipemelo.pandemicsystem.domain.model.enums.TipoRecurso;
 import com.felipemelo.pandemicsystem.domain.model.exception.ObjectNotFoundException;
+import com.felipemelo.pandemicsystem.domain.repository.CidadeRepository;
 import com.felipemelo.pandemicsystem.domain.repository.EnderecoRepository;
+import com.felipemelo.pandemicsystem.domain.repository.EstadoRepository;
 import com.felipemelo.pandemicsystem.domain.repository.HospitalRepository;
 import com.felipemelo.pandemicsystem.domain.repository.OcupacaoRepository;
 import com.felipemelo.pandemicsystem.domain.repository.RecursoInventarioRepository;
@@ -45,15 +47,21 @@ public class HospitalService {
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 	
+	@Autowired
+	private CidadeRepository cidadeRepository;
+	
+	@Autowired
+	private EstadoRepository estadoRepository;
+	
 	
 	public List<HospitalDto> findAll(){
 		return toDtoCollection(hospitalRepository.findAll());
 	}
 	
-	public HospitalDto find(Long idHospital) {
+	public Hospital find(Long idHospital) {
 		Optional<Hospital> obj = hospitalRepository.findById(idHospital);
-		return toDto(obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + idHospital)));
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + idHospital));
 	}
 
 	/*é necessário adicionar um hospital junto com seus itens de inventario e a sua ocupação atual*/
@@ -61,27 +69,32 @@ public class HospitalService {
 		
 		Hospital hospital = fromDto(hospitalDto);
 		
-		for (RecursoInventario ri: hospital.getRecursos()) {
-			ri.setHospital(hospital);
-		}
+		
 
+		estadoRepository.save(hospital.getEndereco().getCidade().getEstado());
+		cidadeRepository.save(hospital.getEndereco().getCidade());
 		enderecoRepository.save(hospital.getEndereco());
 		ocupacaoRepository.save(hospital.getOcupacao());
 		
-		for (RecursoInventario x: hospital.getRecursos()) {
-			x.setHospital(hospital);
-			recursoRepository.save(x.getRecurso());
-			recursoInventarioRepository.save(x);
+		for (RecursoInventario ri: hospital.getRecursos()) {
+			ri.setHospital(hospital);
+			System.out.println("\n\n\n\npassou\n\n\n\n");
+			recursoRepository.save(ri.getRecurso());
+			recursoInventarioRepository.save(ri);
 		}
+		
 		hospitalRepository.save(hospital);
 		return toDto(hospital);
 	}
 	
 	public HospitalDto updateOcupacao(Long idHospital, OcupacaoInput novaOcupacao) {
-		Hospital hospital = fromDto(find(idHospital));
+		Hospital hospital = find(idHospital);
+		System.out.println(novaOcupacao.getPercentualAtualizado());
 		Ocupacao ocupacao = new Ocupacao(null, novaOcupacao.getPercentualAtualizado(), OffsetDateTime.now());
 		hospital.setOcupacao(ocupacao);
 		ocupacao.setHospital(hospital);
+		
+
 		
 		ocupacaoRepository.save(ocupacao);
 		hospitalRepository.save(hospital);
@@ -96,14 +109,15 @@ public class HospitalService {
 		return false;
 	}
 	
-	//TRANSFERENCIA DE MODEL PARA REPRESENTATION MODEL E VICE VERSA
+	//TRANSFERENCIA DE REPRESENTATION MODEL PARA MODEL E VICE VERSA
 	
 	public HospitalDto toDto(Hospital hospital) {
+		List<String> cidadeEstadoDto = toCidadeDto(hospital.getEndereco().getCidade());
 		HospitalDto hospitalDto = new HospitalDto(hospital.getId(), hospital.getNome(), hospital.getCnpj(),
 				hospital.getOcupacao().getPercentual(), toRecursoInventarioDto(hospital.getRecursos()), hospital.getEndereco().getLogradouro(),
 				hospital.getEndereco().getNumero(), hospital.getEndereco().getComplemento(), hospital.getEndereco().getBairro(),
 				hospital.getEndereco().getCep(), hospital.getEndereco().getLatitude(), hospital.getEndereco().getLongitude(),
-				hospital.getEndereco().getCidade().getId());
+				cidadeEstadoDto.get(0), cidadeEstadoDto.get(1));
 		return hospitalDto;
 	}
 	
@@ -123,9 +137,9 @@ public class HospitalService {
 		
 		hospital.setOcupacao(ocupacao);
 		
-		Set<RecursoInventario> recursos = fromRecursoInventarioDto(hospitalDto);
+		List<RecursoInventario> recursos = fromRecursoInventarioDto(hospitalDto);
 
-		Cidade cid = new Cidade(hospitalDto.getCidadeId(), null, null);
+		Cidade cid = fromCidadeDto(hospitalDto);
 		
 		hospital.setEndereco(new Endereco(null, hospitalDto.getLogradouro(), hospitalDto.getNumero(),
 				hospitalDto.getComplemento(), hospitalDto.getBairro(), hospitalDto.getCep(), cid,
@@ -138,8 +152,8 @@ public class HospitalService {
 		
 	}
 	
-	public Set<RecursoInventario> fromRecursoInventarioDto(HospitalDto hospitalDto){
-		Set<RecursoInventario> recursos = new HashSet<>();
+	public List<RecursoInventario> fromRecursoInventarioDto(HospitalDto hospitalDto){
+		List<RecursoInventario> recursos = new ArrayList<>();
 		
 		for (RecursoInventarioDto rid: hospitalDto.getRecursos()) {
 			recursos.add(new RecursoInventario(null, fromRecursoDto(rid.getTipo()), rid.getQuantidade()));
@@ -155,13 +169,35 @@ public class HospitalService {
 		return recurso;
 	}
 	
-	public List<RecursoInventarioDto> toRecursoInventarioDto(Set<RecursoInventario> recursos){
+	public List<RecursoInventarioDto> toRecursoInventarioDto(List<RecursoInventario> recursos){
 		List<RecursoInventarioDto> recursosDto = new ArrayList<>();
 		
 		for (RecursoInventario ri: recursos) {
 			recursosDto.add(new RecursoInventarioDto(ri.getRecurso().getTipo(), ri.getQuantidade()));
 		}
 		return recursosDto;
+	}
+	
+	public Cidade fromCidadeDto(HospitalDto hospitalDto) {
+		Cidade cidade = cidadeRepository.findByNome(hospitalDto.getCidade());
+		Estado estado = estadoRepository.findByNome(hospitalDto.getEstado());
+		
+		if(estado == null) {
+			estado = new Estado(null, hospitalDto.getEstado());
+		}
+		
+		if (cidade == null) {
+			cidade = new Cidade(null, hospitalDto.getCidade(), estado);
+		}
+		return cidade;
+	}
+	
+	public List<String> toCidadeDto(Cidade cidade){
+		String cidadeDto = cidade.getNome();
+		String estadoDto = cidade.getEstado().getNome();
+		List<String> cidadeEstadoDto = new ArrayList<>();
+		cidadeEstadoDto.addAll(Arrays.asList(cidadeDto, estadoDto));
+		return cidadeEstadoDto;
 	}
 
 }

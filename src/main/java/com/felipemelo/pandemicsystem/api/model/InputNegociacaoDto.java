@@ -3,13 +3,19 @@ package com.felipemelo.pandemicsystem.api.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 public class InputNegociacaoDto {
 	
+	@NotNull
 	private Long idHospital1;
+	@NotNull
 	private Long idHospital2;
 	
+	@NotNull
 	private List<RecursoNegociacaoDto> recursosHospital1 = new ArrayList<>();
 	
+	@NotNull
 	private List<RecursoNegociacaoDto> recursosHospital2 = new ArrayList<>();
 	
 	public InputNegociacaoDto() {}

@@ -2,6 +2,8 @@ package com.felipemelo.pandemicsystem.api.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,18 +34,18 @@ public class HospitalController {
 	
 	@GetMapping("/{idHospital}")
 	public ResponseEntity<HospitalDto> find(@PathVariable Long idHospital) {
-		return ResponseEntity.ok().body(hospitalService.find(idHospital));
+		HospitalDto hospitalDto = hospitalService.toDto(hospitalService.find(idHospital));
+		return ResponseEntity.ok().body(hospitalDto);
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public HospitalDto insertHospital(@RequestBody HospitalDto hospitalDto) {
+	public HospitalDto insertHospital(@Valid @RequestBody HospitalDto hospitalDto) {
 		return (hospitalService.insertHospital(hospitalDto));
 	}
 	
 	@PutMapping("/{idHospital}/ocupacao")
-	public ResponseEntity<HospitalDto> updateOcupacao(@PathVariable Long idHospital , @RequestBody OcupacaoInput novaOcupacao){
-		
+	public ResponseEntity<HospitalDto> updateOcupacao(@Valid @PathVariable Long idHospital , @RequestBody OcupacaoInput novaOcupacao){
 		if (!hospitalService.existsById(idHospital)) {
 			return ResponseEntity.notFound().build();
 		}

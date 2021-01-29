@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 
 public class HospitalDto {
 	
@@ -16,8 +18,10 @@ public class HospitalDto {
 	private String cnpj;
 	
 	@NotBlank
+	@NotNull
 	private Double percentualOcupacao;
 	
+	@NotNull
 	private List<RecursoInventarioDto> recursos = new ArrayList<>();
 	
 	private String logradouro;
@@ -28,7 +32,8 @@ public class HospitalDto {
 	private Double latitude;
 	private Double longitude;
 	
-	private Long cidadeId;
+	private String Cidade;
+	private String Estado;
 	
 	public HospitalDto() {}
 	
@@ -36,7 +41,7 @@ public class HospitalDto {
 
 	public HospitalDto(Long id, String nome, String cnpj, Double percentualOcupacao, List<RecursoInventarioDto> recursos,
 			String logradouro, Integer numero, String complemento, String bairro, String cep, Double latitude,
-			Double longitude, Long cidadeId) {
+			Double longitude, String cidade, String estado) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -50,7 +55,8 @@ public class HospitalDto {
 		this.cep = cep;
 		this.latitude = latitude;
 		this.longitude = longitude;
-		this.cidadeId = cidadeId;
+		this.Cidade = cidade;
+		this.Estado = estado;
 	}
 
 
@@ -151,12 +157,20 @@ public class HospitalDto {
 		this.longitude = longitude;
 	}
 
-	public Long getCidadeId() {
-		return cidadeId;
+	public String getCidade() {
+		return Cidade;
 	}
 
-	public void setCidadeId(Long cidadeId) {
-		this.cidadeId = cidadeId;
+	public void setCidade(String cidade) {
+		this.Cidade = cidade;
+	}
+
+	public String getEstado() {
+		return Estado;
+	}
+
+	public void setEstado(String estado) {
+		Estado = estado;
 	}
 
 }

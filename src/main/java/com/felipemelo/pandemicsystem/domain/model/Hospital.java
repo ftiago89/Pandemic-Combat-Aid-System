@@ -1,7 +1,7 @@
 package com.felipemelo.pandemicsystem.domain.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +28,7 @@ public class Hospital {
 	private Ocupacao ocupacao;
 	
 	@OneToMany(mappedBy = "id.hospital")
-	private Set<RecursoInventario> recursos = new HashSet<>();
+	private List<RecursoInventario> recursos = new ArrayList<>();
 	
 	@OneToOne
 	private Endereco endereco;
@@ -67,11 +67,11 @@ public class Hospital {
 		this.cnpj = cnpj;
 	}
 
-	public Set<RecursoInventario> getRecursos() {
+	public List<RecursoInventario> getRecursos() {
 		return recursos;
 	}
 
-	public void setRecursos(Set<RecursoInventario> recursos) {
+	public void setRecursos(List<RecursoInventario> recursos) {
 		this.recursos = recursos;
 	}
 
