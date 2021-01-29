@@ -5,8 +5,7 @@ import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-/*Entidade da classe de associação entre Hospital e Recurso, representa itens do inventario do hospital, pois
- * um hospital pode ter quantidades diferentes de cada tipo de recurso*/
+/*Fiz essa classe de associação, pois o hospital pode ter quantidades diferentes de cada item.*/
 
 @Entity
 public class RecursoInventario {

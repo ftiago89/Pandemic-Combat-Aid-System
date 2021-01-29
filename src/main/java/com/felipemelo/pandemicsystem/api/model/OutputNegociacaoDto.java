@@ -3,6 +3,9 @@ package com.felipemelo.pandemicsystem.api.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/*Esta classe foi feita para que na saída das informações de uma negociação, seja apresentado o custo total
+ * que cada hospital teve na negociação.*/
+
 public class OutputNegociacaoDto {
 	
 	private Long idHospital1;
@@ -10,9 +13,9 @@ public class OutputNegociacaoDto {
 	private Long idHospital2;
 	private Integer pontuacaoHospital2;
 	
-	private List<RecursoNegociacaoDto> recursosHospital1 = new ArrayList<>();
+	private List<RecursoInventarioDto> recursosHospital1 = new ArrayList<>();
 	
-	private List<RecursoNegociacaoDto> recursosHospital2 = new ArrayList<>();
+	private List<RecursoInventarioDto> recursosHospital2 = new ArrayList<>();
 	
 
 
@@ -45,19 +48,19 @@ public class OutputNegociacaoDto {
 		this.idHospital2 = idHospital2;
 	}
 
-	public List<RecursoNegociacaoDto> getRecursosHospital1() {
+	public List<RecursoInventarioDto> getRecursosHospital1() {
 		return recursosHospital1;
 	}
 
-	public void setRecursosHospital1(List<RecursoNegociacaoDto> recursosHospital1) {
+	public void setRecursosHospital1(List<RecursoInventarioDto> recursosHospital1) {
 		this.recursosHospital1 = recursosHospital1;
 	}
 
-	public List<RecursoNegociacaoDto> getRecursosHospital2() {
+	public List<RecursoInventarioDto> getRecursosHospital2() {
 		return recursosHospital2;
 	}
 
-	public void setRecursosHospital2(List<RecursoNegociacaoDto> recursosHospital2) {
+	public void setRecursosHospital2(List<RecursoInventarioDto> recursosHospital2) {
 		this.recursosHospital2 = recursosHospital2;
 	}
 

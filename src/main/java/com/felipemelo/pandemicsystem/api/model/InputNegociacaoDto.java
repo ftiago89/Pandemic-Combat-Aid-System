@@ -3,20 +3,25 @@ package com.felipemelo.pandemicsystem.api.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+/*Representation model de entrada para uma negociação*/
 
 public class InputNegociacaoDto {
 	
-	@NotNull
+	@NotNull(message = "Preenchimento de id obrigatório!")
 	private Long idHospital1;
-	@NotNull
+	@NotNull(message = "Preenchimento de id obrigatório!")
 	private Long idHospital2;
 	
-	@NotNull
-	private List<RecursoNegociacaoDto> recursosHospital1 = new ArrayList<>();
+	@NotEmpty(message = "Preenchimento de recursos obrigatório!")
+	@NotNull(message = "Preenchimento de recursos obrigatório!")
+	private List<RecursoInventarioDto> recursosHospital1 = new ArrayList<>();
 	
-	@NotNull
-	private List<RecursoNegociacaoDto> recursosHospital2 = new ArrayList<>();
+	@NotEmpty(message = "Preenchimento de recursos obrigatório!")
+	@NotNull(message = "Preenchimento de recursos obrigatório!")
+	private List<RecursoInventarioDto> recursosHospital2 = new ArrayList<>();
 	
 	public InputNegociacaoDto() {}
 
@@ -36,19 +41,19 @@ public class InputNegociacaoDto {
 		this.idHospital2 = idHospital2;
 	}
 
-	public List<RecursoNegociacaoDto> getRecursosHospital1() {
+	public List<RecursoInventarioDto> getRecursosHospital1() {
 		return recursosHospital1;
 	}
 
-	public void setRecursosHospital1(List<RecursoNegociacaoDto> recursos) {
+	public void setRecursosHospital1(List<RecursoInventarioDto> recursos) {
 		this.recursosHospital1 = recursos;
 	}
 
-	public List<RecursoNegociacaoDto> getRecursosHospital2() {
+	public List<RecursoInventarioDto> getRecursosHospital2() {
 		return recursosHospital2;
 	}
 
-	public void setRecursosHospital2(List<RecursoNegociacaoDto> recursosHospital2) {
+	public void setRecursosHospital2(List<RecursoInventarioDto> recursosHospital2) {
 		this.recursosHospital2 = recursosHospital2;
 	}
 	
@@ -56,7 +61,7 @@ public class InputNegociacaoDto {
 	
 	public Integer calculaPontos1() {
 		int pontos = 0;
-		for (RecursoNegociacaoDto rnd: this.recursosHospital1) {
+		for (RecursoInventarioDto rnd: this.recursosHospital1) {
 			pontos += rnd.calculaPontos();
 		}
 		return pontos;
@@ -64,7 +69,7 @@ public class InputNegociacaoDto {
 	
 	public Integer calculaPontos2() {
 		int pontos = 0;
-		for (RecursoNegociacaoDto rnd: this.recursosHospital2) {
+		for (RecursoInventarioDto rnd: this.recursosHospital2) {
 			pontos += rnd.calculaPontos();
 		}
 		return pontos;

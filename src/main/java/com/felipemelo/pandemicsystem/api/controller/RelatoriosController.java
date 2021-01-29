@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.felipemelo.pandemicsystem.api.model.RelatorioDto;
 import com.felipemelo.pandemicsystem.domain.service.RelatoriosService;
 
+/*Controlador REST com a função de:
+ * - Apresentar os relatórios requisitados
+ * 
+ * Optei por apresentar esses relatórios nos arquivos Json em forma de string.*/
+
 @RestController
 @RequestMapping("/relatorios")
 public class RelatoriosController {

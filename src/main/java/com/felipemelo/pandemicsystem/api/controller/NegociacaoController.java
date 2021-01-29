@@ -14,6 +14,12 @@ import com.felipemelo.pandemicsystem.api.model.InputNegociacaoDto;
 import com.felipemelo.pandemicsystem.api.model.OutputNegociacaoDto;
 import com.felipemelo.pandemicsystem.domain.service.NegociacaoService;
 
+/*Controlador REST com a função de:
+ * - Realizar uma negociação entre hospitais.
+ * 
+ * Eu tive dúvidas em como modelar essa negociação, optei pela inserção, em uma mesma requisição, dos Ids dos hospitais
+ * participantes e das listas de recursos que ambos oferecem para negociação.*/
+
 @RestController
 @RequestMapping("/negociacoes")
 public class NegociacaoController {

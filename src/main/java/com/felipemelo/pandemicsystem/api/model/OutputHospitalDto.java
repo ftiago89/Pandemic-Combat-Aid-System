@@ -3,25 +3,28 @@ package com.felipemelo.pandemicsystem.api.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+/*Fiz esta classe para representar a saida de um hospital pois nela indica se o hospital está cheio
+ * ou não com o atributo "cheio", diferente da classe InputHospitalDto onde não é preciso informar esse
+ * dado na requisição de cadastro de um hospital.*/
 
-public class HospitalDto {
+public class OutputHospitalDto {
 	
 	private Long id;
 	
-	@NotBlank
+	@NotNull(message = "Preenchimento obrigatório!")
 	@Size(min = 2, max = 120)
 	private String nome;
 	private String cnpj;
 	
-	@NotBlank
-	@NotNull
+	private Boolean cheio;
+	
+	@NotNull(message = "Preenchimento obrigatório!")
 	private Double percentualOcupacao;
 	
-	@NotNull
+	@NotNull(message = "Preenchimento obrigatório!")
 	private List<RecursoInventarioDto> recursos = new ArrayList<>();
 	
 	private String logradouro;
@@ -35,13 +38,13 @@ public class HospitalDto {
 	private String Cidade;
 	private String Estado;
 	
-	public HospitalDto() {}
+	public OutputHospitalDto() {}
 	
 	
 
-	public HospitalDto(Long id, String nome, String cnpj, Double percentualOcupacao, List<RecursoInventarioDto> recursos,
+	public OutputHospitalDto(Long id, String nome, String cnpj, Double percentualOcupacao, List<RecursoInventarioDto> recursos,
 			String logradouro, Integer numero, String complemento, String bairro, String cep, Double latitude,
-			Double longitude, String cidade, String estado) {
+			Double longitude, String cidade, String estado, Boolean cheio) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -57,6 +60,7 @@ public class HospitalDto {
 		this.longitude = longitude;
 		this.Cidade = cidade;
 		this.Estado = estado;
+		this.cheio = cheio;
 	}
 
 
@@ -171,6 +175,14 @@ public class HospitalDto {
 
 	public void setEstado(String estado) {
 		Estado = estado;
+	}
+
+	public Boolean getCheio() {
+		return cheio;
+	}
+
+	public void setCheio(Boolean cheio) {
+		this.cheio = cheio;
 	}
 
 }

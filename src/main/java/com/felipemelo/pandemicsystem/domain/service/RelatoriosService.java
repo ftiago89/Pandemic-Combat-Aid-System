@@ -16,6 +16,9 @@ import com.felipemelo.pandemicsystem.domain.repository.NegociacaoRepository;
 import com.felipemelo.pandemicsystem.domain.repository.OcupacaoRepository;
 import com.felipemelo.pandemicsystem.domain.repository.RecursoInventarioRepository;
 
+/*Realiza os cálculos para a geração dos relatórios. Os resultados são passados como string
+ * para compor os relatórios no controller.*/
+
 @Service
 public class RelatoriosService {
 	

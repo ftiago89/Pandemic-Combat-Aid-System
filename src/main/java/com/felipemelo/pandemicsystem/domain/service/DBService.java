@@ -22,6 +22,8 @@ import com.felipemelo.pandemicsystem.domain.repository.OcupacaoRepository;
 import com.felipemelo.pandemicsystem.domain.repository.RecursoInventarioRepository;
 import com.felipemelo.pandemicsystem.domain.repository.RecursoRepository;
 
+/*Neste serviço é feita uma instancia de testes, com 1 estado, 2 cidades e 2 hospitais*/
+
 @Service
 public class DBService {
 	

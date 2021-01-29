@@ -2,6 +2,8 @@ package com.felipemelo.pandemicsystem.api.model;
 
 import com.felipemelo.pandemicsystem.domain.model.enums.TipoRecurso;
 
+/*Representation model para um recurso do inventario do hospital*/
+
 public class RecursoInventarioDto {
 	
 	private TipoRecurso tipo;
@@ -29,6 +31,29 @@ public class RecursoInventarioDto {
 
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
+	}
+	
+	public Integer calculaPontos() {
+		int pontos = 0;
+		
+		switch (this.tipo) {
+		case MEDICO:
+			pontos =  3 * this.quantidade;
+			break;
+		case ENFERMEIRO:
+			pontos =  3 * this.quantidade;
+			break;
+		case RESPIRADOR:
+			pontos =  5 * this.quantidade;
+			break;
+		case TOMOGRAFO:
+			pontos =  12 * this.quantidade;
+			break;
+		case AMBULANCIA:
+			pontos =  10 * this.quantidade;
+			break;
+		}
+		return pontos;
 	}
 
 }

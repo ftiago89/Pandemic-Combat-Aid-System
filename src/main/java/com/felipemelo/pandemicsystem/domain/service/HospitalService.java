@@ -9,8 +9,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.felipemelo.pandemicsystem.api.model.HospitalDto;
+import com.felipemelo.pandemicsystem.api.model.InputHospitalDto;
 import com.felipemelo.pandemicsystem.api.model.OcupacaoInput;
+import com.felipemelo.pandemicsystem.api.model.OutputHospitalDto;
 import com.felipemelo.pandemicsystem.api.model.RecursoInventarioDto;
 import com.felipemelo.pandemicsystem.domain.model.Cidade;
 import com.felipemelo.pandemicsystem.domain.model.Endereco;
@@ -28,6 +29,11 @@ import com.felipemelo.pandemicsystem.domain.repository.HospitalRepository;
 import com.felipemelo.pandemicsystem.domain.repository.OcupacaoRepository;
 import com.felipemelo.pandemicsystem.domain.repository.RecursoInventarioRepository;
 import com.felipemelo.pandemicsystem.domain.repository.RecursoRepository;
+
+/*Realiza a busca, inserção e update de ocupação de um hospital.
+ * 
+ * Decidi importar os objetos do modelo de representação para cá, com
+ * a finalidade de não ter tantos objetos do dominio na camada da api.*/
 
 @Service
 public class HospitalService {
@@ -54,7 +60,7 @@ public class HospitalService {
 	private EstadoRepository estadoRepository;
 	
 	
-	public List<HospitalDto> findAll(){
+	public List<OutputHospitalDto> findAll(){
 		return toDtoCollection(hospitalRepository.findAll());
 	}
 	
@@ -65,12 +71,12 @@ public class HospitalService {
 	}
 
 	/*é necessário adicionar um hospital junto com seus itens de inventario e a sua ocupação atual*/
-	public HospitalDto insertHospital(HospitalDto hospitalDto) {
+	public OutputHospitalDto insertHospital(InputHospitalDto hospitalDto) {
 		
 		Hospital hospital = fromDto(hospitalDto);
-		
-		
 
+		/*É importante que os objetos sejam salvos nessa ordem para prevenir
+		 * algum erro na inserção dos mesmos no banco.*/
 		estadoRepository.save(hospital.getEndereco().getCidade().getEstado());
 		cidadeRepository.save(hospital.getEndereco().getCidade());
 		enderecoRepository.save(hospital.getEndereco());
@@ -78,7 +84,6 @@ public class HospitalService {
 		
 		for (RecursoInventario ri: hospital.getRecursos()) {
 			ri.setHospital(hospital);
-			System.out.println("\n\n\n\npassou\n\n\n\n");
 			recursoRepository.save(ri.getRecurso());
 			recursoInventarioRepository.save(ri);
 		}
@@ -87,14 +92,16 @@ public class HospitalService {
 		return toDto(hospital);
 	}
 	
-	public HospitalDto updateOcupacao(Long idHospital, OcupacaoInput novaOcupacao) {
+	/*Quando uma ocupação nova é atualizada, é feito o teste para saber se o hospital está
+	 * cheio = 100% de capacidade.*/
+	public OutputHospitalDto updateOcupacao(Long idHospital, OcupacaoInput novaOcupacao) {
 		Hospital hospital = find(idHospital);
-		System.out.println(novaOcupacao.getPercentualAtualizado());
 		Ocupacao ocupacao = new Ocupacao(null, novaOcupacao.getPercentualAtualizado(), OffsetDateTime.now());
 		hospital.setOcupacao(ocupacao);
+		if (novaOcupacao.getPercentualAtualizado() == 100.0) {
+			hospital.setCheio(true);
+		}
 		ocupacao.setHospital(hospital);
-		
-
 		
 		ocupacaoRepository.save(ocupacao);
 		hospitalRepository.save(hospital);
@@ -102,6 +109,7 @@ public class HospitalService {
 		return toDto(hospital);
 	}
 	
+	//método feito para que não seja necessário importar o repository no controller.
 	public boolean existsById(Long idHospital) {
 		if (hospitalRepository.existsById(idHospital)) {
 			return true;
@@ -109,29 +117,28 @@ public class HospitalService {
 		return false;
 	}
 	
-	//TRANSFERENCIA DE REPRESENTATION MODEL PARA MODEL E VICE VERSA
+	/*Transferência entre o modelo de domínio e o modelo de representação é relizada por esses métodos*/
 	
-	public HospitalDto toDto(Hospital hospital) {
+	public OutputHospitalDto toDto(Hospital hospital) {
 		List<String> cidadeEstadoDto = toCidadeDto(hospital.getEndereco().getCidade());
-		HospitalDto hospitalDto = new HospitalDto(hospital.getId(), hospital.getNome(), hospital.getCnpj(),
+		OutputHospitalDto hospitalDto = new OutputHospitalDto(hospital.getId(), hospital.getNome(), hospital.getCnpj(),
 				hospital.getOcupacao().getPercentual(), toRecursoInventarioDto(hospital.getRecursos()), hospital.getEndereco().getLogradouro(),
 				hospital.getEndereco().getNumero(), hospital.getEndereco().getComplemento(), hospital.getEndereco().getBairro(),
 				hospital.getEndereco().getCep(), hospital.getEndereco().getLatitude(), hospital.getEndereco().getLongitude(),
-				cidadeEstadoDto.get(0), cidadeEstadoDto.get(1));
+				cidadeEstadoDto.get(0), cidadeEstadoDto.get(1), hospital.getCheio());
 		return hospitalDto;
 	}
 	
-	public List<HospitalDto> toDtoCollection(List<Hospital> hospitais){
-		List<HospitalDto> hospitaisDto = new ArrayList<>();
+	public List<OutputHospitalDto> toDtoCollection(List<Hospital> hospitais){
+		List<OutputHospitalDto> hospitaisDto = new ArrayList<>();
 		for (Hospital h: hospitais) {
 			hospitaisDto.add(toDto(h));
 		}
 		return hospitaisDto;
 	}
 	
-	public Hospital fromDto(HospitalDto hospitalDto) {
+	public Hospital fromDto(InputHospitalDto hospitalDto) {
 		Ocupacao ocupacao = new Ocupacao(null, hospitalDto.getPercentualOcupacao(), OffsetDateTime.now());
-		
 		Hospital hospital = new Hospital(null, hospitalDto.getNome(), hospitalDto.getCnpj(),
 				ocupacao);
 		
@@ -149,10 +156,9 @@ public class HospitalService {
 		ocupacao.setHospital(hospital);
 		
 		return hospital;
-		
 	}
 	
-	public List<RecursoInventario> fromRecursoInventarioDto(HospitalDto hospitalDto){
+	public List<RecursoInventario> fromRecursoInventarioDto(InputHospitalDto hospitalDto){
 		List<RecursoInventario> recursos = new ArrayList<>();
 		
 		for (RecursoInventarioDto rid: hospitalDto.getRecursos()) {
@@ -162,6 +168,8 @@ public class HospitalService {
 	}
 	
 	public Recurso fromRecursoDto(TipoRecurso tipo) {
+		/*Caso um tipo de recurso já exista, é feita uma busca para não
+		 * precisar cadastrar o mesmo tipo de recurso mais de uma vez.*/
 		Recurso recurso = recursoRepository.findByTipo(tipo.getCod());
 		if (recurso == null) {
 			recurso = new Recurso(null, tipo);
@@ -178,7 +186,7 @@ public class HospitalService {
 		return recursosDto;
 	}
 	
-	public Cidade fromCidadeDto(HospitalDto hospitalDto) {
+	public Cidade fromCidadeDto(InputHospitalDto hospitalDto) {
 		Cidade cidade = cidadeRepository.findByNome(hospitalDto.getCidade());
 		Estado estado = estadoRepository.findByNome(hospitalDto.getEstado());
 		
@@ -186,8 +194,15 @@ public class HospitalService {
 			estado = new Estado(null, hospitalDto.getEstado());
 		}
 		
+		/*Duas cidades podem ter o mesmo nome em estados diferentes, então
+		 * se a cidade já existir no banco de dados, mas o estado for diferente,
+		 * esta cidade é criada como uma nova.*/
 		if (cidade == null) {
 			cidade = new Cidade(null, hospitalDto.getCidade(), estado);
+		}else {
+			if (!(cidade.getEstado().getNome().equals(estadoRepository.findByNome(estado.getNome())))) {
+				cidade = new Cidade(null, hospitalDto.getCidade(), estado);
+			}
 		}
 		return cidade;
 	}

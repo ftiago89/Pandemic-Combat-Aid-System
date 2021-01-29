@@ -4,6 +4,9 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/*Esta classe é utilizada para dar forma erros compostos, por exemplo quando é esquecido de passar
+ * na mesma requisição de negociação o id dos hospitais e/ou as listas de recursos.*/
+
 public class ValidationError extends StandardError{
 private static final long serialVersionUID = 1L;
 	

@@ -16,9 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.felipemelo.pandemicsystem.api.model.HospitalDto;
+import com.felipemelo.pandemicsystem.api.model.InputHospitalDto;
 import com.felipemelo.pandemicsystem.api.model.OcupacaoInput;
+import com.felipemelo.pandemicsystem.api.model.OutputHospitalDto;
 import com.felipemelo.pandemicsystem.domain.service.HospitalService;
+
+/*Controlador REST com a função de:
+ * - Buscar todos os hospitais cadastrados.
+ * - Buscar um hospital por id.
+ * - Cadastrar um novo hospital.
+ * - Fazer update no percentual de ocupação de um hospital.*/
 
 @RestController
 @RequestMapping("/hospitais")
@@ -28,24 +35,24 @@ public class HospitalController {
 	private HospitalService hospitalService;
 	
 	@GetMapping
-	public List<HospitalDto> findAll(){
+	public List<OutputHospitalDto> findAll(){
 		return hospitalService.findAll();
 	}
 	
 	@GetMapping("/{idHospital}")
-	public ResponseEntity<HospitalDto> find(@PathVariable Long idHospital) {
-		HospitalDto hospitalDto = hospitalService.toDto(hospitalService.find(idHospital));
-		return ResponseEntity.ok().body(hospitalDto);
+	public ResponseEntity<OutputHospitalDto> find(@PathVariable Long idHospital) {
+		OutputHospitalDto outputHospitalDto = hospitalService.toDto(hospitalService.find(idHospital));
+		return ResponseEntity.ok().body(outputHospitalDto);
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public HospitalDto insertHospital(@Valid @RequestBody HospitalDto hospitalDto) {
+	public OutputHospitalDto insertHospital(@Valid @RequestBody InputHospitalDto hospitalDto) {
 		return (hospitalService.insertHospital(hospitalDto));
 	}
 	
 	@PutMapping("/{idHospital}/ocupacao")
-	public ResponseEntity<HospitalDto> updateOcupacao(@Valid @PathVariable Long idHospital , @RequestBody OcupacaoInput novaOcupacao){
+	public ResponseEntity<OutputHospitalDto> updateOcupacao(@Valid @PathVariable Long idHospital , @RequestBody OcupacaoInput novaOcupacao){
 		if (!hospitalService.existsById(idHospital)) {
 			return ResponseEntity.notFound().build();
 		}
