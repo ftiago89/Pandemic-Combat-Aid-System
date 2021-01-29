@@ -66,6 +66,7 @@ Você irá desenvolver uma **API RESTFul** (a ideia é que facilmente outros sis
 
 # Tasks 
 
+- [x] Criar profile de teste com BD H2
 - [x] Adicionar hospitais
 - [x] Atualizar ocupação de hospitais
 - [x] Hospitais não podem adicionar/remover recursos
@@ -77,7 +78,7 @@ Você irá desenvolver uma **API RESTFul** (a ideia é que facilmente outros sis
 - [x] Relatório hospital em situação menos crítica (mais tempo com a menor ocupação)
 - [x] Relatório histórico de negociações
 - [ ] Validar o input de informações como cnpj, cep, etc.
-- [ ] Criar profile de desenvolvimento com BD Mysql
+- [x] Criar profile de desenvolvimento com BD Mysql localmente
 - [ ] Realizar testes com mais informações utilizando o postman
 - [ ] Verificar a necessidade de adicionar mais comentários no código
 - [ ] Adicionar Testes (Unitários e/ou integração)
