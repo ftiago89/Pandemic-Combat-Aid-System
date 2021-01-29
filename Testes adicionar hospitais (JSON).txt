@@ -1,0 +1,189 @@
+{
+    "id": null,
+    "nome": "Santa Sofia",
+    "cnpj": "2222222222",
+    "percentualOcupacao": 25.0,
+    "recursos": [
+    {
+    "tipo": "MEDICO",
+    "quantidade": 5
+    },
+    {
+    "tipo": "ENFERMEIRO",
+    "quantidade": 5
+    },
+    {
+    "tipo": "RESPIRADOR",
+    "quantidade": 5
+    },
+    {
+    "tipo": "AMBULANCIA",
+    "quantidade": 5
+    },
+    {
+    "tipo": "TOMOGRAFO",
+    "quantidade": 5
+    }
+    ],
+    "logradouro": "Rua Costa Beiriz",
+    "numero": 220,
+    "complemento": "Hospital",
+    "bairro": "Centro",
+    "cep": "58406-444",
+    "latitude": 5.55,
+    "longitude": 8.9654,
+    "estado": "PB",
+    "cidade": "Guarabira"
+}
+
+{
+    "id": null,
+    "nome": "Saude Mulher",
+    "cnpj": "33333333333",
+    "percentualOcupacao": 72.0,
+    "recursos": [
+    {
+    "tipo": "MEDICO",
+    "quantidade": 5
+    },
+    {
+    "tipo": "ENFERMEIRO",
+    "quantidade": 5
+    },
+    {
+    "tipo": "RESPIRADOR",
+    "quantidade": 5
+    },
+    {
+    "tipo": "AMBULANCIA",
+    "quantidade": 5
+    },
+    {
+    "tipo": "TOMOGRAFO",
+    "quantidade": 5
+    }
+    ],
+    "logradouro": "Rua das Orquideas",
+    "numero": 300,
+    "complemento": "Hospital",
+    "bairro": "Jaguaribe",
+    "cep": "58406-444",
+    "latitude": 5.55,
+    "longitude": 8.9654,
+    "estado": "PB",
+    "cidade": "João Pessoa"
+}
+
+{
+    "id": null,
+    "nome": "Hapvida",
+    "cnpj": "44444444444",
+    "percentualOcupacao": 93.0,
+    "recursos": [
+    {
+    "tipo": "MEDICO",
+    "quantidade": 5
+    },
+    {
+    "tipo": "ENFERMEIRO",
+    "quantidade": 5
+    },
+    {
+    "tipo": "RESPIRADOR",
+    "quantidade": 5
+    },
+    {
+    "tipo": "AMBULANCIA",
+    "quantidade": 5
+    },
+    {
+    "tipo": "TOMOGRAFO",
+    "quantidade": 5
+    }
+    ],
+    "logradouro": "Av. Julia Freire",
+    "numero": 456,
+    "complemento": "Hospital",
+    "bairro": "Torre",
+    "cep": "58406-444",
+    "latitude": 5.55,
+    "longitude": 8.9654,
+    "estado": "PB",
+    "cidade": "João Pessoa"
+}
+
+{
+    "id": null,
+    "nome": "Mais Vida",
+    "cnpj": "55555555555",
+    "percentualOcupacao": 95.0,
+    "recursos": [
+    {
+    "tipo": "MEDICO",
+    "quantidade": 5
+    },
+    {
+    "tipo": "ENFERMEIRO",
+    "quantidade": 5
+    },
+    {
+    "tipo": "RESPIRADOR",
+    "quantidade": 5
+    },
+    {
+    "tipo": "AMBULANCIA",
+    "quantidade": 5
+    },
+    {
+    "tipo": "TOMOGRAFO",
+    "quantidade": 5
+    }
+    ],
+    "logradouro": "Rua Santos Dummont",
+    "numero": 550,
+    "complemento": "Hospital",
+    "bairro": "Cruzeiro",
+    "cep": "58406-444",
+    "latitude": 5.55,
+    "longitude": 8.9654,
+    "estado": "PE",
+    "cidade": "Recife"
+}
+
+{
+    "id": null,
+    "nome": "Santo Antonio",
+    "cnpj": "66666666666",
+    "percentualOcupacao": 88.0,
+    "recursos": [
+    {
+    "tipo": "MEDICO",
+    "quantidade": 5
+    },
+    {
+    "tipo": "ENFERMEIRO",
+    "quantidade": 5
+    },
+    {
+    "tipo": "RESPIRADOR",
+    "quantidade": 5
+    },
+    {
+    "tipo": "AMBULANCIA",
+    "quantidade": 5
+    },
+    {
+    "tipo": "TOMOGRAFO",
+    "quantidade": 5
+    }
+    ],
+    "logradouro": "Rua Freire Rosa",
+    "numero": 650,
+    "complemento": "Hospital",
+    "bairro": "Bairro Novo",
+    "cep": "58406-444",
+    "latitude": 5.55,
+    "longitude": 8.9654,
+    "estado": "PE",
+    "cidade": "Recife"
+}

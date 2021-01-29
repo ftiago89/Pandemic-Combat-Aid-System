@@ -1,0 +1,24 @@
+{
+    "idHospital1": 1,
+    "idHospital2": 2,
+    "recursosHospital1": [
+        {
+            "tipo": "AMBULANCIA",
+            "quantidade": 1
+        },
+        {
+            "tipo": "ENFERMEIRO",
+            "quantidade": 1
+        }
+    ],
+    "recursosHospital2": [
+        {
+            "tipo": "MEDICO",
+            "quantidade": 1
+        },
+        {
+            "tipo": "ENFERMEIRO",
+            "quantidade": 1
+        }
+    ]
+}

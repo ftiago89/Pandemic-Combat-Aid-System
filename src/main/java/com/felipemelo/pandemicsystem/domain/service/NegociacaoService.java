@@ -60,7 +60,7 @@ public class NegociacaoService {
 		
 		/*Para tratar a restrição da necessidade de os hospitais ofertarem a mesma quantidade de pontos. Caso um dos
 		 * hospitais apresente ocupação maior que 90%, então a negociação é liberada.*/
-		if ((input.calculaPontos1() != input.calculaPontos2()) && (!((hospital1.getOcupacao().getPercentual() > 90.0))
+		if ((input.calculaPontos1() != input.calculaPontos2()) && !(((hospital1.getOcupacao().getPercentual() > 90.0))
 				|| ((hospital2.getOcupacao().getPercentual() > 90.0)))) {
 			throw new NegociacaoInvalidaException("Negociação inválida! Os hospitais precisam oferecer a mesma"
 					+ " quantidade de pontos.");
