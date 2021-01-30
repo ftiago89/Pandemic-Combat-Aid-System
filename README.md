@@ -1,5 +1,14 @@
 # Pandemic Combat Aid System
 
+## Documentação
+
+A documentação pode ser acessada ao executar o código a partir da URI: http://host:porta/swagger-ui/
+Ou pelo documento PDF que foi anexado na pasta principal do repositório. Também foram anexados o diagrama de classes e exemplos em Json para adicionar hospitais, negociações e fazer update em hospitais, para facilitar testes.
+
+## Profiles de Teste e Desenvolvimento
+
+Para trocar para profile de teste (bando de dados H2) ou profile de Desenvolvimento (Banco de dados Mysql local) é necessário modificar o valor do atributo (spring.profiles.active=), do arquivo application.properties, para "test" ou "dev".
+
 ## Descrição do problema
 
 Quando o mundo é atingido por uma pandemia sem remédio imediato, além das habilidades dos profissionais de saúde, é preciso ter um bom sistema de informações para ajudar nas tomadas de decisões, visando amenizar ao máximo seus impactos.
@@ -42,6 +51,13 @@ Você irá desenvolver uma **API RESTFul** (a ideia é que facilmente outros sis
   | 1 Respirador |  5 pontos |
   | 1 Tomógrafo  | 12 ponto  |
   | 1 Ambulância | 10 ponto  |
+  
+
+* ** [<span style="color: red">REQUISITO ADICIONADO </pan>] Flag de capacidade máxima nos hospitais**
+  
+  Caso um hospital atualize seu percentual de ocupação para 100%, este hospital deve sinalizar que sua capacidade está no máximo e não pode atender mais pacientes. Deste modo, os outros hospitais da mesma região poderão se preparar para um possível aumento no número de pacientes com antecedência.
+  
+  
 
 * **Relatórios**
 
@@ -64,7 +80,7 @@ Você irá desenvolver uma **API RESTFul** (a ideia é que facilmente outros sis
 6. Da descrição acima você pode escrever uma solução básica ou adicionar requisitos não descritos. Use seu tempo com sabedoria; Uma solução ótima e definitiva pode levar muito tempo para ser efetiva, então você deve trazer a melhor solução possível, que leve o mínimo de tempo, mas que ainda seja capaz de demonstrar suas habilidades.
 7. Comente qualquer dúvida e cada decisão tomada.
 
-# Tasks 
+# Tarefas
 
 - [x] Criar profile de teste com BD H2
 - [x] Adicionar hospitais
@@ -77,9 +93,10 @@ Você irá desenvolver uma **API RESTFul** (a ideia é que facilmente outros sis
 - [x] Relatório hospital em situação mais crítica (mais tempo com ocupação maior que 90%)
 - [x] Relatório hospital em situação menos crítica (mais tempo com a menor ocupação)
 - [x] Relatório histórico de negociações
-- [ ] Validar o input de informações como cnpj, cep, etc.
+- [x] Validar o input de algumas informações na inserção
+  - [ ] Validar o input de CNPJ para hospitais
 - [x] Criar profile de desenvolvimento com BD Mysql localmente
-- [ ] Realizar testes com mais informações utilizando o postman
-- [ ] Verificar a necessidade de adicionar mais comentários no código
+- [x] Realizar testes com mais informações utilizando o postman
+- [x] Verificar a necessidade de adicionar mais comentários no código
 - [ ] Adicionar Testes (Unitários e/ou integração)
-- [ ] Documentação Swagger
+- [x] Documentação Swagger
