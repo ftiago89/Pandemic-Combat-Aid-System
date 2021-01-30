@@ -53,7 +53,7 @@ Você irá desenvolver uma **API RESTFul** (a ideia é que facilmente outros sis
   | 1 Ambulância | 10 ponto  |
   
 
-* ** [<span style="color: red">REQUISITO ADICIONADO </pan>] Flag de capacidade máxima nos hospitais**
+* **[REQUISITO ADICIONADO] Flag de capacidade máxima nos hospitais**
   
   Caso um hospital atualize seu percentual de ocupação para 100%, este hospital deve sinalizar que sua capacidade está no máximo e não pode atender mais pacientes. Deste modo, os outros hospitais da mesma região poderão se preparar para um possível aumento no número de pacientes com antecedência.
   
